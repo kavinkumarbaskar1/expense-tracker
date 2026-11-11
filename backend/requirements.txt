@@ -1,0 +1,4 @@
+fastapi
+httpx2
+uvicorn[standard]
+pytest
