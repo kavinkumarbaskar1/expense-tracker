@@ -3,6 +3,7 @@
 from fastapi import FastAPI
 
 from app.api import api_router
+from app.persistence.database import initialize_persistence
 
 
 def create_app() -> FastAPI:
@@ -14,6 +15,10 @@ def create_app() -> FastAPI:
     )
 
     application.include_router(api_router)
+
+    @application.on_event("startup")
+    def startup() -> None:
+        initialize_persistence()
 
     @application.get("/health", tags=["health"])
     def health_check() -> dict[str, str]:
